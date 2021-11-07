@@ -19,12 +19,10 @@ namespace TopTop.BallController
         [SerializeField] private List<GameObject> shapes;
         [SerializeField] private List<GameObject> numbersOfShapes;
         [SerializeField] private GameObject pointTargetGameObject;
-        [SerializeField] private GameObject level;
-        [SerializeField] private GameObject panel;
+        [SerializeField] private GameObject adsPanel;
         [SerializeField] private TextMeshProUGUI message;
 
         TextMeshPro pointTargetText;
-        TextMeshPro levelText;
 
         List<TextMeshPro> numbers = new List<TextMeshPro>();
 
@@ -36,19 +34,8 @@ namespace TopTop.BallController
         void Start()
         {
             pointTargetText = pointTargetGameObject.GetComponent<TextMeshPro>();
-            levelText = level.GetComponent<TextMeshPro>();
 
-            if (data.endGameMessage == "" || data.endGameMessage == "Seviye Tamamlandý")
-            {
-                data.LastCount = data.Count;
-                data.Level++;
-                data.TargetCount += random.Next(10, 50);
-            }
-            else
-            {
-                data.Count = data.LastCount;
-            }
-            levelText.text = "Level " + data.Level;
+            data.Count = 0;
 
             pointTargetText.text = data.Count + "/" + data.TargetCount;
             foreach(var numbersOfShape in numbersOfShapes)
@@ -74,7 +61,7 @@ namespace TopTop.BallController
             
             transform.position = transform.position + new Vector3(0, _controllerSettings.Speed, 0);
 
-            if (ballInput.isTouched && panel.activeSelf == false)
+            if (ballInput.isTouched && data.GameState == true)
             {
                 Vector3 ballTouchPosition = transform.position;
                 _controllerSettings.Speed = -1 * _controllerSettings.Speed;
@@ -102,11 +89,13 @@ namespace TopTop.BallController
                         data.endGameMessage = "Hedefi ýskaladýnýz.";
                         data.endButonString = "Tekrar";
                         message.text = data.endGameMessage;
-                        panel.SetActive(true);
+                        data.LastCount = data.Count;
+                        data.GameState = false;
+                        adsPanel.SetActive(true);
                     }
                     else
                     {
-                        panel.SetActive(false);
+                        adsPanel.SetActive(false);
                         data.Count += Int32.Parse(numbers[index].text.ToString());
                     }
                 }
@@ -122,9 +111,7 @@ namespace TopTop.BallController
 
             if (data.Count == data.TargetCount)
             {
-                data.endGameMessage = "Seviye Tamamlandý";
-                data.endButonString = "Sonraki Seviye";
-                SceneManager.LoadScene("EndGame");
+                data.TargetCount += random.Next(10, 50);
             }
         }
 
@@ -137,8 +124,17 @@ namespace TopTop.BallController
         }
         public void devamEt() //silinecek
         {
+            data.GameState = true;
+            data.Count = data.LastCount;
             Debug.Log("Reklam gösterildi");
-            panel.SetActive(false);
+            adsPanel.SetActive(false);
         }
+
+        public void started()
+        {
+            data.GameState = true;
+            data.Count = 0;
+        }
+
     }
 }

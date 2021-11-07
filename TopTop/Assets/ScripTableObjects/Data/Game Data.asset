@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1803bea8216df3e43ba4915f25f4c763, type: 3}
   m_Name: Game Data
   m_EditorClassIdentifier: 
-  endGameMessage: "Hedefi \u0131skalad\u0131n\u0131z."
-  endButonString: Tekrar
-  Count: 77
-  TargetCount: 122
-  LastCount: 77
-  Level: 5
+  endGameMessage: 
+  endButonString: 
+  Count: 0
+  TargetCount: 0
+  LastCount: 0
+  GameState: 0

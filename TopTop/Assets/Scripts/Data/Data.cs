@@ -9,9 +9,9 @@ namespace TopTop.GameData
     {
         public string endGameMessage = "";
         public string endButonString = "";
-        public int Count;
-        public int TargetCount;
-        public int LastCount;
-        public int Level;
+        public int Count = 0;
+        public int TargetCount = 0;
+        public int LastCount = 0;
+        public bool GameState = false;
     }
 }

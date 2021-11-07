@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TopTop.GameData;
+using Random = System.Random;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -7,6 +9,13 @@ using UnityEngine.SceneManagement;
 public class ProgressBar : FillBar
 {
     private UnityEvent onProgressComplete;
+
+    [SerializeField] private GameObject menuPanel;
+    [SerializeField] private GameObject adsPanel;
+    [SerializeField] private GameObject endPanel;
+    [SerializeField] private Data gameData;
+
+    Random random = new Random();
 
     // Create a property to handle the slider's value
     public new float CurrentValue
@@ -41,7 +50,11 @@ public class ProgressBar : FillBar
     // The method to call when the progress bar fills up
     void OnProgressComplete()
     {
-        SceneManager.LoadScene("EndGame");
+        gameData.Count = 0;
+        gameData.TargetCount = random.Next(10, 50);
+        menuPanel.SetActive(false);
+        adsPanel.SetActive(false);
+        endPanel.SetActive(true);
     }
 
     public void Clear()
