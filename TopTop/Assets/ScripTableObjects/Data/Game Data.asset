@@ -18,3 +18,4 @@ MonoBehaviour:
   TargetCount: 0
   LastCount: 0
   GameState: 0
+  HighScore: 0

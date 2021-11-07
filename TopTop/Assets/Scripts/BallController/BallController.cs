@@ -86,6 +86,11 @@ namespace TopTop.BallController
                 {
                     if ((data.Count + Int32.Parse(numbers[index].text.ToString())) > data.TargetCount)
                     {
+                        if(data.Count > data.HighScore)
+                        {
+                            PlayerPrefs.SetInt("HighScore", data.Count);
+                        }
+
                         data.endGameMessage = "Hedefi ýskaladýnýz.";
                         data.endButonString = "Tekrar";
                         message.text = data.endGameMessage;

@@ -14,6 +14,7 @@ namespace TopTop.UIController
         [SerializeField] private GameObject adsPanel;
         [SerializeField] private GameObject endPanel;
         [SerializeField] private Data gameData;
+        [SerializeField] private TextMeshProUGUI highScoreText;
 
         /*
         [SerializeField] private TextMeshProUGUI message;
@@ -22,6 +23,9 @@ namespace TopTop.UIController
 
         private void Start()
         {
+            highScoreText.text = "HighScore:" + PlayerPrefs.GetInt("HighScore");
+            gameData.HighScore = PlayerPrefs.GetInt("HighScore");
+
             menuPanel.SetActive(true);
             adsPanel.SetActive(false);
             endPanel.SetActive(false);
@@ -44,6 +48,9 @@ namespace TopTop.UIController
 
         public void goHomePage()
         {
+            highScoreText.text = "HighScore:" + PlayerPrefs.GetInt("HighScore");
+            gameData.HighScore = PlayerPrefs.GetInt("HighScore");
+
             menuPanel.SetActive(true);
             adsPanel.SetActive(false);
             endPanel.SetActive(false);

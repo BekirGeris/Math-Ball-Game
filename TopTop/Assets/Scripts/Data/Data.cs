@@ -13,5 +13,6 @@ namespace TopTop.GameData
         public int TargetCount = 0;
         public int LastCount = 0;
         public bool GameState = false;
+        public int HighScore = 0;
     }
 }
