@@ -20,7 +20,7 @@ namespace TopTop.BallController
         [SerializeField] private List<GameObject> numbersOfShapes;
         [SerializeField] private GameObject pointTargetGameObject;
         [SerializeField] private GameObject adsPanel;
-        [SerializeField] private GameObject endPanel;
+        [SerializeField] private GameObject endPanel;        
         [SerializeField] private TextMeshProUGUI messageAds;
         [SerializeField] private TextMeshProUGUI messageEnd;
 
@@ -68,8 +68,6 @@ namespace TopTop.BallController
                 Vector3 ballTouchPosition = transform.position;
                 _controllerSettings.Speed = -1 * _controllerSettings.Speed;
 
-                Debug.Log((PlayerPrefs.GetInt("reklam izlendimi", 0) == 0) + " " + (Application.internetReachability == NetworkReachability.NotReachable));
-
                 float min = float.MaxValue;
                 int index = -1;
                 foreach (var shape in shapes)
@@ -104,7 +102,7 @@ namespace TopTop.BallController
                         if (PlayerPrefs.GetInt("reklam izlendimi", 0) == 0)
                         {
                             //reklam izlenecek
-                            adsPanel.SetActive(true);
+                            adsPanel.SetActive(true); 
                         }
                         else
                         {

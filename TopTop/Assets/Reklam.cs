@@ -5,10 +5,10 @@ using UnityEngine.Advertisements;
 
 public class Reklam : MonoBehaviour, IUnityAdsListener
 {
-    private string gameID = "4451675";
+    private string gameID = "**********";
     private string devmEtReklam = "devamEtOdullu";
     private string banner = "bannerAna-EndSayfa";
-    private bool testMode = true;
+    private bool testMode = false;
     private bool bannerActive = false;
 
     void Start()
@@ -75,11 +75,11 @@ public class Reklam : MonoBehaviour, IUnityAdsListener
             }
             else if (showResult == ShowResult.Skipped)
             {
-
+                Debug.Log("Skipped");
             }
             else if (showResult == ShowResult.Failed)
             {
-
+                Debug.Log("Failed");
             }
         }
     }
