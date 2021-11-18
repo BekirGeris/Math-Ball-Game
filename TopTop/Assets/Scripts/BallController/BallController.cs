@@ -21,6 +21,7 @@ namespace TopTop.BallController
         [SerializeField] private GameObject pointTargetGameObject;
         [SerializeField] private GameObject adsPanel;
         [SerializeField] private GameObject endPanel;        
+        [SerializeField] private GameObject proBar;        
         [SerializeField] private TextMeshProUGUI messageAds;
         [SerializeField] private TextMeshProUGUI messageEnd;
 
@@ -102,7 +103,8 @@ namespace TopTop.BallController
                         if (PlayerPrefs.GetInt("reklam izlendimi", 0) == 0)
                         {
                             //reklam izlenecek
-                            adsPanel.SetActive(true); 
+                            adsPanel.SetActive(true);
+                            proBar.SetActive(true);
                         }
                         else
                         {
@@ -110,11 +112,14 @@ namespace TopTop.BallController
                             endPanel.SetActive(true);
                         }
 
-                        if(Application.internetReachability == NetworkReachability.NotReachable)
-                        {
-                            //reklam zaten izlenmiþ veya internet baðlantýsý yok
-                            endPanel.SetActive(true);
-                        }
+                        StartCoroutine(checkInternetConnection((isConnected) => {
+                            Debug.Log(isConnected);
+                            if (isConnected == false)
+                            {
+                                //internet baðlantýsý yok
+                                endPanel.SetActive(true);
+                            }
+                        }));
                     }
                     else
                     {
@@ -147,9 +152,10 @@ namespace TopTop.BallController
         }
         public void devamEt() //silinecek
         {
-            data.GameState = true;
             data.Count = data.LastCount;
-            adsPanel.SetActive(false);
+            proBar.SetActive(false);
+            //adsPanel.SetActive(false);
+            //data.GameState = true;
         }
             
         public void started()
@@ -159,5 +165,18 @@ namespace TopTop.BallController
             data.TargetCount = 0;
         }
 
+        IEnumerator checkInternetConnection(Action<bool> action)
+        {
+            WWW www = new WWW("http://google.com");
+            yield return www;
+            if (www.error != null)
+            {
+                action(false);
+            }
+            else
+            {
+                action(true);
+            }
+        }
     }
 }

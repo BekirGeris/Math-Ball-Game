@@ -1,85 +1,94 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TopTop.GameData;
 using UnityEngine.Advertisements;
 
-public class Reklam : MonoBehaviour, IUnityAdsListener
+namespace TopTop.Reklam
 {
-    private string gameID = "**********";
-    private string devmEtReklam = "devamEtOdullu";
-    private string banner = "bannerAna-EndSayfa";
-    private bool testMode = false;
-    private bool bannerActive = false;
-
-    void Start()
+    public class Reklam : MonoBehaviour, IUnityAdsListener
     {
-        Advertisement.AddListener(this);
-        Advertisement.Initialize(gameID, testMode);
-    }
+        private string gameID = "4451675";
+        private string devmEtReklam = "devamEtOdullu";
+        private string banner = "bannerAna-EndSayfa";
+        private bool testMode = false;
+        private bool bannerActive = false;
 
-    private void Update()
-    {
-        if (!bannerActive)
+        [SerializeField] private Data gameData;
+        [SerializeField] private GameObject adsPanel;
+
+        void Start()
         {
-            bannerShow();
+            Advertisement.AddListener(this);
+            Advertisement.Initialize(gameID, testMode);
         }
-    }
 
-    public void odulluReklamShow()
-    {
-        if (Advertisement.IsReady(devmEtReklam))
+        private void Update()
         {
-            Advertisement.Show(devmEtReklam);
-        }
-    }
-
-    public void bannerShow()
-    {
-        if (Advertisement.IsReady(banner))
-        {
-            Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
-            Advertisement.Banner.Show(banner);
-            bannerActive = true;
-        }
-    }
-
-    public void bannerHide()
-    {
-        Advertisement.Banner.Hide();
-    }
-
-    public void OnUnityAdsReady(string placementId)
-    {
-
-    }
-
-    public void OnUnityAdsDidError(string message)
-    {
-        
-    }
-
-    public void OnUnityAdsDidStart(string placementId)
-    {
-
-    }
-
-    public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
-    {
-        if(placementId == devmEtReklam)
-        {
-            if (showResult == ShowResult.Finished)
+            if (!bannerActive)
             {
-                Debug.Log("AD " + placementId +" COMPLETE");
-                //reklam izlendimi 1 ise izlendi, 0ise izlenmedi
-                PlayerPrefs.SetInt("reklam izlendimi", 1);
+                bannerShow();
             }
-            else if (showResult == ShowResult.Skipped)
+        }
+
+        public void odulluReklamShow()
+        {
+            if (Advertisement.IsReady(devmEtReklam))
             {
-                Debug.Log("Skipped");
+                Advertisement.Show(devmEtReklam);
             }
-            else if (showResult == ShowResult.Failed)
+        }
+
+        public void bannerShow()
+        {
+            if (Advertisement.IsReady(banner))
             {
-                Debug.Log("Failed");
+                Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
+                Advertisement.Banner.Show(banner);
+                bannerActive = true;
+            }
+        }
+
+        public void bannerHide()
+        {
+            Advertisement.Banner.Hide();
+        }
+
+        public void OnUnityAdsReady(string placementId)
+        {
+
+        }
+
+        public void OnUnityAdsDidError(string message)
+        {
+
+        }
+
+        public void OnUnityAdsDidStart(string placementId)
+        {
+
+        }
+
+        public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
+        {
+            if (placementId == devmEtReklam)
+            {
+                if (showResult == ShowResult.Finished)
+                {
+                    Debug.Log("AD " + placementId + " COMPLETE");
+                    //reklam izlendimi 1 ise izlendi, 0ise izlenmedi
+                    PlayerPrefs.SetInt("reklam izlendimi", 1);
+                    adsPanel.SetActive(false);
+                    gameData.GameState = true;
+                }
+                else if (showResult == ShowResult.Skipped)
+                {
+                    Debug.Log("Skipped");
+                }
+                else if (showResult == ShowResult.Failed)
+                {
+                    Debug.Log("Failed");
+                }
             }
         }
     }

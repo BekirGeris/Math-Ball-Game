@@ -3616,6 +3616,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9f85eff9740ae4daea7c1a1517b3dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: ba78cf47965f743448ca2644016b5420, type: 2}
+  adsPanel: {fileID: 460707657}
 --- !u!4 &1131259357
 Transform:
   m_ObjectHideFlags: 0
@@ -5770,6 +5772,7 @@ MonoBehaviour:
   pointTargetGameObject: {fileID: 1726566137}
   adsPanel: {fileID: 460707657}
   endPanel: {fileID: 747792670}
+  proBar: {fileID: 28597951}
   messageAds: {fileID: 2079969800}
   messageEnd: {fileID: 2105699769}
 --- !u!50 &1764020172
