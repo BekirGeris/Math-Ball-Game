@@ -26,16 +26,7 @@ namespace TopTop.UIController
             highScoreText.text = "HighScore:" + PlayerPrefs.GetInt("HighScore");
             gameData.HighScore = PlayerPrefs.GetInt("HighScore");
 
-            menuPanel.SetActive(true);
-            adsPanel.SetActive(false);
-            endPanel.SetActive(false);
-        }
-
-        public void stoped()
-        {
-            menuPanel.SetActive(false);
-            adsPanel.SetActive(true);
-            endPanel.SetActive(false);
+            menuPanelStart();
         }
 
         public void started()
@@ -51,14 +42,21 @@ namespace TopTop.UIController
             highScoreText.text = "HighScore:" + PlayerPrefs.GetInt("HighScore");
             gameData.HighScore = PlayerPrefs.GetInt("HighScore");
 
+            menuPanelStart();
+        }
+
+        public void tekrar()     
+        {
+            PlayerPrefs.SetInt("reklam izlendimi", 0);
+            started();
+        }
+
+        public void menuPanelStart()
+        {
+            PlayerPrefs.SetInt("reklam izlendimi", 0);
             menuPanel.SetActive(true);
             adsPanel.SetActive(false);
             endPanel.SetActive(false);
-        }
-
-        public void tekrar()
-        {
-            started();
         }
     }
 }
