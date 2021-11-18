@@ -20,7 +20,9 @@ namespace TopTop.BallController
         [SerializeField] private List<GameObject> numbersOfShapes;
         [SerializeField] private GameObject pointTargetGameObject;
         [SerializeField] private GameObject adsPanel;
-        [SerializeField] private TextMeshProUGUI message;
+        [SerializeField] private GameObject endPanel;
+        [SerializeField] private TextMeshProUGUI messageAds;
+        [SerializeField] private TextMeshProUGUI messageEnd;
 
         TextMeshPro pointTargetText;
 
@@ -46,7 +48,7 @@ namespace TopTop.BallController
 
             foreach(var number in numbers)
             {
-                number.text = random.Next(1, 10) + "";
+                number.text = random.Next(1, 20) + "";
             }
 
             for(int i = 0;i <= shapes.Count; i++)
@@ -65,6 +67,8 @@ namespace TopTop.BallController
             {
                 Vector3 ballTouchPosition = transform.position;
                 _controllerSettings.Speed = -1 * _controllerSettings.Speed;
+
+                Debug.Log((PlayerPrefs.GetInt("reklam izlendimi", 0) == 0) + " " + (Application.internetReachability == NetworkReachability.NotReachable));
 
                 float min = float.MaxValue;
                 int index = -1;
@@ -93,10 +97,26 @@ namespace TopTop.BallController
 
                         data.endGameMessage = "Hedefi ýskaladýnýz.";
                         data.endButonString = "Tekrar";
-                        message.text = data.endGameMessage;
+                        messageAds.text = data.endGameMessage;
+                        messageEnd.text = data.endGameMessage;
                         data.LastCount = data.Count;
                         data.GameState = false;
-                        adsPanel.SetActive(true);
+                        if (PlayerPrefs.GetInt("reklam izlendimi", 0) == 0)
+                        {
+                            //reklam izlenecek
+                            adsPanel.SetActive(true);
+                        }
+                        else
+                        {
+                            //reklam zaten izlenmiþ veya internet baðlantýsý yok
+                            endPanel.SetActive(true);
+                        }
+
+                        if(Application.internetReachability == NetworkReachability.NotReachable)
+                        {
+                            //reklam zaten izlenmiþ veya internet baðlantýsý yok
+                            endPanel.SetActive(true);
+                        }
                     }
                     else
                     {
@@ -131,14 +151,14 @@ namespace TopTop.BallController
         {
             data.GameState = true;
             data.Count = data.LastCount;
-            Debug.Log("Reklam gösterildi");
             adsPanel.SetActive(false);
         }
-
+            
         public void started()
         {
             data.GameState = true;
             data.Count = 0;
+            data.TargetCount = 0;
         }
 
     }
