@@ -22,6 +22,7 @@ namespace TopTop.BallController
         [SerializeField] private GameObject adsPanel;
         [SerializeField] private GameObject endPanel;        
         [SerializeField] private GameObject proBar;        
+        [SerializeField] private GameObject circleBar;        
         [SerializeField] private TextMeshProUGUI messageAds;
         [SerializeField] private TextMeshProUGUI messageEnd;
 
@@ -61,7 +62,7 @@ namespace TopTop.BallController
         // Update is called once per frame
         void Update() //_rigidbody.transform.forward * ballInput.Horizontal * _controllerSettings.HorizontalSpeet
         {
-            
+
             transform.position = transform.position + new Vector3(0, _controllerSettings.Speed, 0);
 
             if (ballInput.isTouched && data.GameState == true)
@@ -105,6 +106,7 @@ namespace TopTop.BallController
                             //reklam izlenecek
                             adsPanel.SetActive(true);
                             proBar.SetActive(true);
+                            circleBar.SetActive(false);
                         }
                         else
                         {
@@ -154,6 +156,7 @@ namespace TopTop.BallController
         {
             data.Count = data.LastCount;
             proBar.SetActive(false);
+            circleBar.SetActive(true);
             //adsPanel.SetActive(false);
             //data.GameState = true;
         }
