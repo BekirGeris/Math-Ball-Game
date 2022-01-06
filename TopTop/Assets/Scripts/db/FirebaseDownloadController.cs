@@ -60,7 +60,7 @@ public class FirebaseDownloadController : MonoBehaviour
                         int i = 0;
                         foreach(var hg in data)
                         {
-                            highScoreTexts[i].text = hg.highScoreName + " --> " + hg.highScore;
+                            highScoreTexts[i].text = hg.highScoreName + " -- " + hg.highScore;
                             i++;
                             if(i == 14)
                             {

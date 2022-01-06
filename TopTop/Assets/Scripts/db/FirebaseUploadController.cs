@@ -27,6 +27,7 @@ public class FirebaseUploadController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        data = new List<HighScore>();
 
         reference = FirebaseDatabase.DefaultInstance.RootReference;
      
@@ -36,7 +37,7 @@ public class FirebaseUploadController : MonoBehaviour
 
     public void Update()
     {
-        if(timer.getTime() >= 5000)
+        if(timer.getTime() >= 15000)
         {
             timer.clearTimer();
             cicleBarSharePanel.SetActive(false);
@@ -48,7 +49,6 @@ public class FirebaseUploadController : MonoBehaviour
     public void addHighScore()
     {
         string highScoreName = shareNameEditText.text;
-        Debug.Log(highScoreName);
         if (highScoreName.Length <= 1)
         {
             showToast.MyShowToastMethod("Name cannot be empty");
@@ -83,73 +83,109 @@ public class FirebaseUploadController : MonoBehaviour
 
     public void shareHigScore()
     {
-        string uuid = PlayerPrefs.GetString("UUID", "null");
-        if (uuid == "null")
+        if (PlayerPrefs.GetString("UUID", "null") == "null")
         {
             Guid myuuid = Guid.NewGuid();
             PlayerPrefs.SetString("UUID", myuuid.ToString());
-            Debug.Log("UUID");
         }
         string highScoreName = shareNameEditText.text.ToString();
         int highScore = gameData.HighScore;
-        HighScore hs = new HighScore(PlayerPrefs.GetString("UUID", "null"), highScoreName, highScore);
+        string uuid = PlayerPrefs.GetString("UUID", "null");
+        HighScore hs = new HighScore(uuid, highScoreName, highScore);
         string json = JsonUtility.ToJson(hs);
-        reference.Child("users").Child(highScoreName).SetRawJsonValueAsync(json).ContinueWithOnMainThread(task => {
+        isHgNameOkay(uuid, highScoreName, 
+            () => {
 
-            isHgNameOkay(uuid, highScoreName, () => {
-                showToast.MyShowToastMethod("High Score Shared");
-                sharePanel.SetActive(false);
-                PlayerPrefs.SetInt("highScoreIsCurrent", 0); //hg güncel
+                reference.Child("users").Child(uuid).SetRawJsonValueAsync(json).ContinueWithOnMainThread(task => {
+                    showToast.MyShowToastMethod("High Score Shared");
+                    sharePanel.SetActive(false);
+                    PlayerPrefs.SetInt("highScoreIsCurrent", 0); //hg güncel
+                    cicleBarSharePanel.SetActive(false);
+                    timer.clearTimer();
+                    firebaseDownloadController.loadData();
+                });
+
             },
             () => {
-                showToast.MyShowToastMethod("Error! Name is not available.");
-            });
 
-            cicleBarSharePanel.SetActive(false);
-            timer.clearTimer();
-            firebaseDownloadController.loadData();
-        });
+                showToast.MyShowToastMethod("Error! Name is not available.");
+                cicleBarSharePanel.SetActive(false);
+                timer.clearTimer();
+                firebaseDownloadController.loadData();
+            });
     }
 
     public void isHgNameOkay(string uuid, string highScoreName, Action onSuccess, Action onFailure)
     {
         FirebaseDatabase.DefaultInstance
             .GetReference("users")
-            .OrderByChild("highScore")
             .GetValueAsync()
             .ContinueWithOnMainThread(task =>
             {
                 if (task.IsFaulted)
                 {
-                    
+                    Debug.Log("IsFaulted");
                 }
                 else if (task.IsCompleted)
                 {
+                    Debug.Log("IsCompleted");
                     bool flag = false;
+                    bool isHaveUUID = false;
+                    bool isHaveName = false;
                     data.Clear();
                     DataSnapshot snapshot = task.Result;
 
                     foreach (var dataSnapshot in snapshot.Children)
                     {
+                        Debug.Log("dataSnapshot");
                         data.Add(new HighScore(dataSnapshot.Child("uuid").Value.ToString(), 
                             dataSnapshot.Child("highScoreName").Value.ToString(), 
                             int.Parse(dataSnapshot.Child("highScore").Value.ToString())));
                     }
 
-                    foreach(var hg in data)
+                    foreach (var hg in data)
                     {
-                        if(uuid == hg.uuid && highScoreName == hg.highScoreName)
+                        if (uuid == hg.uuid)
+                        {
+                            isHaveUUID = true;
+                        }
+
+                        if (highScoreName == hg.highScoreName)
+                        {
+                            isHaveName = true;
+                        }
+                    }
+
+                    foreach (var hg in data)
+                    {
+                        if (uuid == hg.uuid && highScoreName == hg.highScoreName)
                         {
                             flag = true;
+                            Debug.Log("data 1");
                         }
-                        else if (uuid == hg.uuid && highScoreName != hg.highScoreName)
+                        else if (uuid == hg.uuid)
                         {
-                            flag = true;
+                            foreach (var hg2 in data)
+                            {
+                                if(highScoreName != hg2.highScoreName)
+                                {
+                                    flag = true;
+                                    Debug.Log("data 2");
+                                    deleteOldHighScore(uuid);
+                                }
+                            }
                         }
-                        else if (uuid != hg.uuid && highScoreName == hg.highScoreName)
+                        else if(isHaveName && isHaveUUID)
                         {
                             flag = false;
+                            Debug.Log("data 3");
                         }
+
+                    }
+
+                    if (isHaveUUID == false && isHaveName == false)
+                    {
+                        flag = true;
                     }
 
                     if (flag)
@@ -162,5 +198,11 @@ public class FirebaseUploadController : MonoBehaviour
                     }
                 }
             });
+    }
+
+    private void deleteOldHighScore(string uuid)
+    {
+        Debug.Log(uuid);
+        reference.Child("users").Child(uuid).RemoveValueAsync();
     }
 }
