@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="firebase_database_url" translatable="false">https://ballmathgame-default-rtdb.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">958806909636</string>
+  <string name="google_storage_bucket" translatable="false">ballmathgame.appspot.com</string>
+  <string name="project_id" translatable="false">ballmathgame</string>
+  <string name="google_api_key" translatable="false">AIzaSyATcLUR_GSH0_pugFI6eNMPyEjnAIfJA7M</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyATcLUR_GSH0_pugFI6eNMPyEjnAIfJA7M</string>
+  <string name="google_app_id" translatable="false">1:958806909636:android:3606c41896ad00f5d39f91</string>
+  <string name="default_web_client_id" translatable="false">958806909636-rr219freln2ai21jch1vkbm07jum5dtd.apps.googleusercontent.com</string>
+</resources>

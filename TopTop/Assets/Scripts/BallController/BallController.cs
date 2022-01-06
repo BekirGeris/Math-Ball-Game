@@ -37,6 +37,8 @@ namespace TopTop.BallController
         // Start is called before the first frame update
         void Start()
         {
+            circleBar.SetActive(false);
+
             pointTargetText = pointTargetGameObject.GetComponent<TextMeshPro>();
 
             data.Count = 0;
@@ -93,6 +95,7 @@ namespace TopTop.BallController
                         if(data.Count > data.HighScore)
                         {
                             PlayerPrefs.SetInt("HighScore", data.Count);
+                            PlayerPrefs.SetInt("highScoreIsCurrent", 1); //hg artýk güncel deðil
                         }
 
                         data.endGameMessage = "Hedefi ýskaladýnýz.";
@@ -110,12 +113,11 @@ namespace TopTop.BallController
                         }
                         else
                         {
-                            //reklam zaten izlenmiþ veya internet baðlantýsý yok
+                            //reklam zaten izlenmiþ
                             endPanel.SetActive(true);
                         }
 
                         StartCoroutine(checkInternetConnection((isConnected) => {
-                            Debug.Log(isConnected);
                             if (isConnected == false)
                             {
                                 //internet baðlantýsý yok

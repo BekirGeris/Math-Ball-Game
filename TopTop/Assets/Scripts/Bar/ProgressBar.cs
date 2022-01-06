@@ -60,5 +60,6 @@ public class ProgressBar : FillBar
     public void Clear()
     {
         CurrentValue = 0;
+        base.slider.value = 0;
     }
 }

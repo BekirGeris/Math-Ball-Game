@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
 using TopTop.GameData;
+using TopTop.Toast;
 
 namespace TopTop.UIController
 { 
@@ -13,8 +14,10 @@ namespace TopTop.UIController
         [SerializeField] private GameObject menuPanel;
         [SerializeField] private GameObject adsPanel;
         [SerializeField] private GameObject endPanel;
+        [SerializeField] private GameObject sharePanel;
         [SerializeField] private Data gameData;
         [SerializeField] private TextMeshProUGUI highScoreText;
+        [SerializeField] private ShowToast showToast;
 
         /*
         [SerializeField] private TextMeshProUGUI message;
@@ -23,7 +26,7 @@ namespace TopTop.UIController
 
         private void Start()
         {
-            highScoreText.text = "HighScore:" + PlayerPrefs.GetInt("HighScore");
+            highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore");
             gameData.HighScore = PlayerPrefs.GetInt("HighScore");
 
             menuPanelStart();
@@ -39,7 +42,7 @@ namespace TopTop.UIController
 
         public void goHomePage()
         {
-            highScoreText.text = "HighScore:" + PlayerPrefs.GetInt("HighScore");
+            highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore");
             gameData.HighScore = PlayerPrefs.GetInt("HighScore");
 
             menuPanelStart();
@@ -57,6 +60,28 @@ namespace TopTop.UIController
             menuPanel.SetActive(true);
             adsPanel.SetActive(false);
             endPanel.SetActive(false);
+            sharePanel.SetActive(false);
+        }
+
+        public void openSharePanel()
+        {
+            if (gameData.HighScore == 0)
+            {
+                showToast.MyShowToastMethod("Cannot be shared when high score is 0.");
+            }
+            else if (PlayerPrefs.GetInt("highScoreIsCurrent", 1) == 0)
+            {
+                showToast.MyShowToastMethod("You have already shared the high score.");
+            }
+            else
+            {
+                sharePanel.SetActive(true);
+            }
+        }
+
+        public void closeSharePanel()
+        {
+            sharePanel.SetActive(false);
         }
     }
 }
