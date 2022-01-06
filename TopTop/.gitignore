@@ -63,3 +63,8 @@ crashlytics-build.properties
 
 #Firebase
 *.json
+
+*.dll
+*.bundle
+*.so
+*.srcaar
