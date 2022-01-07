@@ -111,7 +111,6 @@ public class FirebaseUploadController : MonoBehaviour
                 showToast.MyShowToastMethod("Error! Name is not available.");
                 cicleBarSharePanel.SetActive(false);
                 timer.clearTimer();
-                firebaseDownloadController.loadData();
             });
     }
 

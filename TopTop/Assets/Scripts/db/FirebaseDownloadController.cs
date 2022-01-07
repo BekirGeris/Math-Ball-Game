@@ -3,6 +3,7 @@ using Firebase.Extensions;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class FirebaseDownloadController : MonoBehaviour
 {
@@ -15,6 +16,17 @@ public class FirebaseDownloadController : MonoBehaviour
     {
         data = new List<HighScore>();
 
+        FirebaseDatabase.DefaultInstance.GetReference("users").ValueChanged += HandleChildChanged;
+
+    }
+
+    private void HandleChildChanged(object sender, ValueChangedEventArgs e)
+    {
+        if (e.DatabaseError != null)
+        {
+            Debug.LogError(e.DatabaseError.Message);
+            return;
+        }
         loadData();
     }
 
