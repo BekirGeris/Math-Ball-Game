@@ -98,8 +98,7 @@ namespace TopTop.BallController
                             PlayerPrefs.SetInt("highScoreIsCurrent", 1); //hg artýk güncel deðil
                         }
 
-                        data.endGameMessage = "Hedefi ýskaladýnýz.";
-                        data.endButonString = "Tekrar";
+                        data.endGameMessage = "You missed the target.";
                         messageAds.text = data.endGameMessage;
                         messageEnd.text = data.endGameMessage;
                         data.LastCount = data.Count;

@@ -39,6 +39,7 @@ public class ProgressBar : FillBar
         // Initialize onProgressComplete and set a basic callback
         if (onProgressComplete == null)
             onProgressComplete = new UnityEvent();
+
         onProgressComplete.AddListener(OnProgressComplete);
     }
 
@@ -48,7 +49,7 @@ public class ProgressBar : FillBar
     }
 
     // The method to call when the progress bar fills up
-    void OnProgressComplete()
+    public void OnProgressComplete()
     {
         gameData.Count = 0;
         gameData.TargetCount = random.Next(10, 50);
