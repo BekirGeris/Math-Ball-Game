@@ -128,7 +128,6 @@ public class FirebaseUploadController : MonoBehaviour
                 }
                 else if (task.IsCompleted)
                 {
-                    Debug.Log("IsCompleted");
                     bool flag = false;
                     bool isHaveUUID = false;
                     bool isHaveName = false;
@@ -137,7 +136,6 @@ public class FirebaseUploadController : MonoBehaviour
 
                     foreach (var dataSnapshot in snapshot.Children)
                     {
-                        Debug.Log("dataSnapshot");
                         data.Add(new HighScore(dataSnapshot.Child("uuid").Value.ToString(), 
                             dataSnapshot.Child("highScoreName").Value.ToString(), 
                             int.Parse(dataSnapshot.Child("highScore").Value.ToString())));
@@ -145,7 +143,7 @@ public class FirebaseUploadController : MonoBehaviour
 
                     foreach (var hg in data)
                     {
-                        if (uuid == hg.uuid)
+                        if (uuid.Equals(hg.uuid))
                         {
                             isHaveUUID = true;
                         }
@@ -154,33 +152,20 @@ public class FirebaseUploadController : MonoBehaviour
                         {
                             isHaveName = true;
                         }
-                    }
 
-                    foreach (var hg in data)
-                    {
                         if (uuid == hg.uuid && highScoreName == hg.highScoreName)
                         {
                             flag = true;
-                            Debug.Log("data 1");
                         }
-                        else if (uuid == hg.uuid)
-                        {
-                            foreach (var hg2 in data)
-                            {
-                                if(highScoreName != hg2.highScoreName)
-                                {
-                                    flag = true;
-                                    Debug.Log("data 2");
-                                    deleteOldHighScore(uuid);
-                                }
-                            }
-                        }
-                        else if(isHaveName && isHaveUUID)
-                        {
-                            flag = false;
-                            Debug.Log("data 3");
-                        }
+                    }
 
+                    if (isHaveUUID)
+                    {
+                        if (!isHaveName)
+                        {
+                            flag = true;
+                            deleteOldHighScore(uuid);
+                        }
                     }
 
                     if (isHaveUUID == false && isHaveName == false)
