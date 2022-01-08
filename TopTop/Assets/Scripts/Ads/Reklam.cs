@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TopTop.GameData;
 using UnityEngine.Advertisements;
-using UnityEngine.UI;
 using TopTop.Toast;
+using TopTop.Utiles;
 
 namespace TopTop.Reklam
 {
@@ -45,7 +43,7 @@ namespace TopTop.Reklam
                 adsPanel.SetActive(false);
                 endPanel.SetActive(true);
                 flag = false;
-                showToast.MyShowToastMethod("Ad Failed to Show...");
+                showToast.MyShowToastMethod(RuntimeHelper.selectStringByLanguage("Reklam Gösterilemedi!", "Ad Failed to Show!"));
             }
 
             if(timer.getTime() < 1000 && timer.getTime() > 0)

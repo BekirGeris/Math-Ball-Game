@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TopTop.GameData;
 using Random = System.Random;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public class ProgressBar : FillBar
 {

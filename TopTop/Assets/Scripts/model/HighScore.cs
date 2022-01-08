@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class HighScore
 {
     public string uuid;
@@ -17,3 +13,4 @@ public class HighScore
         this.highScore = highScore;
     }
 }
+

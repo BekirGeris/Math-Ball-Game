@@ -1,14 +1,12 @@
 using Firebase.Extensions;
 using Firebase.Database;
-using Firebase;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using TopTop.Toast;
 using TopTop.GameData;
+using TopTop.Utiles;
 using System;
-using Newtonsoft.Json.Serialization;
 
 public class FirebaseUploadController : MonoBehaviour
 {
@@ -37,12 +35,12 @@ public class FirebaseUploadController : MonoBehaviour
 
     public void Update()
     {
-        if(timer.getTime() >= 15000)
+        if(timer.getTime() >= 5000)
         {
             timer.clearTimer();
             cicleBarSharePanel.SetActive(false);
             sharePanel.SetActive(false);
-            showToast.MyShowToastMethod("High Score Not Shared");
+            showToast.MyShowToastMethod(RuntimeHelper.selectStringByLanguage("Rekor Paylaþýlamadý!", "High Score Not Shared!"));
         }
     }
 
@@ -51,11 +49,11 @@ public class FirebaseUploadController : MonoBehaviour
         string highScoreName = shareNameEditText.text;
         if (highScoreName.Length <= 1)
         {
-            showToast.MyShowToastMethod("Name cannot be empty");
+            showToast.MyShowToastMethod(RuntimeHelper.selectStringByLanguage("Ýsim boþ olamaz!", "Name cannot be empty!"));
         }
         else if(highScoreName.Length > 7)
         {
-            showToast.MyShowToastMethod("The name cannot be longer than 6 characters");
+            showToast.MyShowToastMethod(RuntimeHelper.selectStringByLanguage("Ad 6 karakterden uzun olamaz!", "The name cannot be longer than 6 characters"));
         }
         else
         {
@@ -97,7 +95,7 @@ public class FirebaseUploadController : MonoBehaviour
             () => {
 
                 reference.Child("users").Child(uuid).SetRawJsonValueAsync(json).ContinueWithOnMainThread(task => {
-                    showToast.MyShowToastMethod("High Score Shared");
+                    showToast.MyShowToastMethod(RuntimeHelper.selectStringByLanguage("Rekor Paylaþýldý!", "High Score Shared!"));
                     sharePanel.SetActive(false);
                     PlayerPrefs.SetInt("highScoreIsCurrent", 0); //hg güncel
                     cicleBarSharePanel.SetActive(false);
@@ -108,7 +106,7 @@ public class FirebaseUploadController : MonoBehaviour
             },
             () => {
 
-                showToast.MyShowToastMethod("Error! Name is not available.");
+                showToast.MyShowToastMethod(RuntimeHelper.selectStringByLanguage("Hata! Ad uygun deðil.", "Error! Name is not available."));
                 cicleBarSharePanel.SetActive(false);
                 timer.clearTimer();
             });

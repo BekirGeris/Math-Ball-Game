@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace TopTop.Bar
 { 
-   
     public class CircleBar : MonoBehaviour
     {
         [SerializeField] private Image circleBar;

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TopTop.Input;
 using TopTop.GameData;
+using TopTop.Utiles;
 using UnityEngine;
 using TMPro;
 using Random = System.Random;
@@ -98,7 +99,7 @@ namespace TopTop.BallController
                             PlayerPrefs.SetInt("highScoreIsCurrent", 1); //hg artýk güncel deðil
                         }
 
-                        data.endGameMessage = "You missed the target.";
+                        data.endGameMessage = RuntimeHelper.selectStringByLanguage("Hedefi kaçýrdýn.", "You missed the target.");
                         messageAds.text = data.endGameMessage;
                         messageEnd.text = data.endGameMessage;
                         data.LastCount = data.Count;

@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
-using UnityEngine.Advertisements;
 using TopTop.GameData;
+using TopTop.Utiles;
 using TopTop.Toast;
 
 namespace TopTop.UIController
@@ -26,9 +23,8 @@ namespace TopTop.UIController
 
         private void Start()
         {
-            highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore");
+            highScoreText.text = RuntimeHelper.selectStringByLanguage("Rekor: ", "High Score: ") + PlayerPrefs.GetInt("HighScore");
             gameData.HighScore = PlayerPrefs.GetInt("HighScore");
-
             menuPanelStart();
         }
 
@@ -42,7 +38,7 @@ namespace TopTop.UIController
 
         public void goHomePage()
         {
-            highScoreText.text = "High Score: " + PlayerPrefs.GetInt("HighScore");
+            highScoreText.text = RuntimeHelper.selectStringByLanguage("Rekor: ", "High Score: ") + PlayerPrefs.GetInt("HighScore");
             gameData.HighScore = PlayerPrefs.GetInt("HighScore");
 
             menuPanelStart();
@@ -67,11 +63,11 @@ namespace TopTop.UIController
         {
             if (gameData.HighScore == 0)
             {
-                showToast.MyShowToastMethod("Cannot be shared when high score is 0.");
+                showToast.MyShowToastMethod(RuntimeHelper.selectStringByLanguage("Rekor 0'ken paylaþýlamaz.", "Cannot be shared when high score is 0."));
             }
             else if (PlayerPrefs.GetInt("highScoreIsCurrent", 1) == 0)
             {
-                showToast.MyShowToastMethod("You have already shared the high score.");
+                showToast.MyShowToastMethod(RuntimeHelper.selectStringByLanguage("Zaten rekoru paylaþtýnýz.", "You have already shared the high score."));
             }
             else
             {
