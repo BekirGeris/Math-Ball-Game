@@ -4,9 +4,9 @@ public class HighScore
 
     public string highScoreName;
 
-    public int highScore;
+    public double highScore;
 
-    public HighScore(string uuid, string highScoreName, int highScore)
+    public HighScore(string uuid, string highScoreName, double highScore)
     {
         this.uuid = uuid;
         this.highScoreName = highScoreName;

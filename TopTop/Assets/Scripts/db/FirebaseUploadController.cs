@@ -135,7 +135,7 @@ public class FirebaseUploadController : MonoBehaviour
                     {
                         data.Add(new HighScore(dataSnapshot.Child("uuid").Value.ToString(), 
                             dataSnapshot.Child("highScoreName").Value.ToString(), 
-                            int.Parse(dataSnapshot.Child("highScore").Value.ToString())));
+                            double.Parse(dataSnapshot.Child("highScore").Value.ToString())));
                     }
 
                     foreach (var hg in data)

@@ -29,12 +29,6 @@ public class FirebaseDownloadController : MonoBehaviour
         loadData();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void loadData()
     {
         data.Clear();
@@ -62,7 +56,7 @@ public class FirebaseDownloadController : MonoBehaviour
                     {
                         data.Add(new HighScore(dataSnapshot.Child("uuid").Value.ToString(), 
                             dataSnapshot.Child("highScoreName").Value.ToString(), 
-                            int.Parse(dataSnapshot.Child("highScore").Value.ToString())));
+                            double.Parse(dataSnapshot.Child("highScore").Value.ToString())));
                     }
 
                     if(data.Count > 0)
