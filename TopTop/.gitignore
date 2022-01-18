@@ -70,5 +70,8 @@ crashlytics-build.properties
 *.srcaar
 *.jar
 *.aar
+*.srcaar.meta
+*.jar.meta
+*.aar.meta
 
 *.json.meta
