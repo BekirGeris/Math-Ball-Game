@@ -67,7 +67,7 @@ public class FirebaseDownloadController : MonoBehaviour
                         {
                             highScoreTexts[i].text = hg.highScoreName + " -- " + hg.highScore;
                             i++;
-                            if(i == 14)
+                            if(i == highScoreTexts.Count)
                             {
                                 break;
                             }

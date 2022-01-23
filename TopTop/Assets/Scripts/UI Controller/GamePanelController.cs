@@ -57,6 +57,7 @@ namespace TopTop.UIController
             adsPanel.SetActive(false);
             endPanel.SetActive(false);
             sharePanel.SetActive(false);
+            gameData.GameState = false;
         }
 
         public void openSharePanel()
